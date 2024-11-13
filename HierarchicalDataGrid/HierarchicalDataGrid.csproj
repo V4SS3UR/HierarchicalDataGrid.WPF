@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net462;net47;net48;net5.0-windows;net6.0-windows</TargetFrameworks>
+    <AssemblyVersion>0.0.1.0</AssemblyVersion>
+    <FileVersion>$(AssemblyVersion)</FileVersion>
+    <Version>$(AssemblyVersion)</Version>
+    <UseWPF>true</UseWPF>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>$(AssemblyName).WPF</PackageId>
+    <Title>$(AssemblyName).WPF</Title>
+    <Authors>V4SS3UR</Authors>
+    <Product>$(AssemblyName).WPF</Product>
+    <Description></Description>
+    <Copyright>V4SS3UR</Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl></RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>WPF;XAML</PackageTags>
+    <PackageLicenseExpression> BSD-3-Clause</PackageLicenseExpression>
+    <SignAssembly>False</SignAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>
+</Project>
