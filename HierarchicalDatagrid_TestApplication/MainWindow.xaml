@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HierarchicalDatagrid_TestApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="600">
+        Title="TestApplication" Height="650" Width="600">
     <Grid>
         <local:HierarchicalDatagrid/>
     </Grid>

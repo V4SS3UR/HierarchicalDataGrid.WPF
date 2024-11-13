@@ -37,6 +37,12 @@ namespace HierarchicalDataGrid.Controls
         public static readonly DependencyProperty ShowCountColumnProperty = DependencyProperty.Register(nameof(ShowCountColumn),
                     typeof(bool), typeof(HierarchicalDataGrid), new PropertyMetadata(true, OnShowCountColumnChanged));
 
+        public static readonly DependencyProperty LevelColumnHeaderProperty = DependencyProperty.Register(nameof(LevelColumnHeader),
+                    typeof(string), typeof(HierarchicalDataGrid), new PropertyMetadata("Depth", OnLevelColumnHeaderChanged));
+
+        public static readonly DependencyProperty CountColumnHeaderProperty = DependencyProperty.Register(nameof(CountColumnHeader),
+                    typeof(string), typeof(HierarchicalDataGrid), new PropertyMetadata("Count", OnCountColumnHeaderChanged));
+
 
 
         private static void OnBindingItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -66,6 +72,14 @@ namespace HierarchicalDataGrid.Controls
         private static void OnShowCountColumnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             (d as HierarchicalDataGrid)?.OnShowCountColumnChanged((bool)e.NewValue);
+        }
+        private static void OnLevelColumnHeaderChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as HierarchicalDataGrid)?.OnLevelColumnHeaderChanged((string)e.NewValue);
+        }
+        private static void OnCountColumnHeaderChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as HierarchicalDataGrid)?.OnCountColumnHeaderChanged((string)e.NewValue);
         }
 
 
@@ -104,6 +118,16 @@ namespace HierarchicalDataGrid.Controls
             get => (bool)GetValue(ShowCountColumnProperty);
             set => SetValue(ShowCountColumnProperty, value);
         }
+        public string LevelColumnHeader
+        {
+            get => (string)GetValue(LevelColumnHeaderProperty);
+            set => SetValue(LevelColumnHeaderProperty, value);
+        }
+        public string CountColumnHeader
+        {
+            get => (string)GetValue(CountColumnHeaderProperty);
+            set => SetValue(CountColumnHeaderProperty, value);
+        }
 
 
 
@@ -118,7 +142,7 @@ namespace HierarchicalDataGrid.Controls
             baseColumns = new List<DataGridColumn>();
             baseItemSource = new List<FlattenedDataModel>();
             flattenedItemsSource = new ObservableCollection<FlattenedDataModel>();
-
+            
             TryToFindRecursiveMemberName();
 
             // Create layout
@@ -211,26 +235,26 @@ namespace HierarchicalDataGrid.Controls
         }
         private void CreateLevelColumn()
         {
-            var levelColumn = new DataGridTextColumn()
+            var column = new DataGridTextColumn()
             {
-                Header = "Level",
+                Header = this.LevelColumnHeader,
                 Width = new DataGridLength(1, DataGridLengthUnitType.Auto),
                 Binding = new Binding("Level"),
                 Visibility = ShowLevelColumn ? Visibility.Visible : Visibility.Collapsed
             };
 
-            baseColumns.Add(levelColumn);
+            baseColumns.Add(column);
         }
         private void CreateCountColumn()
         {
-            var levelColumn = new DataGridTextColumn()
+            var column = new DataGridTextColumn()
             {
-                Header = "Inside",
+                Header = this.CountColumnHeader,
                 Width = new DataGridLength(1, DataGridLengthUnitType.Auto),
                 Binding = new Binding("SubData.Count"),
                 Visibility = ShowCountColumn ? Visibility.Visible : Visibility.Collapsed
             };
-            baseColumns.Add(levelColumn);
+            baseColumns.Add(column);
         }
 
 
@@ -304,6 +328,7 @@ namespace HierarchicalDataGrid.Controls
                 shrink(item);
             }
         }
+
 
         private void RefreshFlattenedItemsSource(IEnumerable collection)
         {
@@ -440,6 +465,18 @@ namespace HierarchicalDataGrid.Controls
         {
             var countColumn = baseColumns[2];
             countColumn.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+        }
+        private void OnLevelColumnHeaderChanged(string value)
+        {
+            var levelColumn = baseColumns[1];
+            levelColumn.Header = value;
+            this.RefreshColumns(this.BindingColumns);
+        }
+        private void OnCountColumnHeaderChanged(string value)
+        {
+            var countColumn = baseColumns[2];
+            countColumn.Header = value;
+            this.RefreshColumns(this.BindingColumns);
         }
 
         private void BindingItemsSource_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
