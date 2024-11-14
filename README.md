@@ -3,8 +3,9 @@
 HierarchicalDataGrid.WPF is a WPF control that combines the functionality of a `DataGrid` and a `TreeView`. This hybrid control provides expandable rows, bindable columns, and a structured, hierarchical data view, making it perfect for applications needing rich data binding and a nested data presentation.
 
 <p align="center">
-    <img src="https://placehold.co/600x400" width="50%">
+    <img src="https://github.com/user-attachments/assets/eeec1615-74a8-494c-8f65-194d3ace8a3f">
 </p>
+
 
 ## Features
 
